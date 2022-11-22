@@ -19,18 +19,19 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <stdbool.h>
 
-typedef	struct	ind_philo
+typedef struct ind_philo
 {
-	int 			id;
+	int				id;
 	int				ate_nbr;
 	int				last_meal;
 	pthread_mutex_t	lfork;
 	pthread_mutex_t	*rfork;
 	pthread_t		thr;
 	pthread_t		death_thr;
-	struct	vars	*varg;
-
+	struct vars		*varg;
+	bool			done_eating;
 
 }	t_philos;
 
@@ -42,7 +43,8 @@ typedef struct vars
 	int				t_sleep;
 	int				min_eat;
 	t_philos		*ph;
-	int				status;  // 0 = gud, 1 = ded, 2 = filled
+	int				status;
+	bool			full;
 	int				hmfe;
 	pthread_mutex_t	death;
 	pthread_mutex_t	write;
@@ -53,20 +55,13 @@ typedef struct vars
 }		t_vars;
 
 // ----FUNCTIONS------
-// main.c
 void	init_vars(t_vars *vars, int ac, char **av);
-int	time_stamp(struct timeval	time);
-
-// parsing.c
-int	parsing(int ac, char **av);
-
-int	ft_atoi(const char *str);
-// philo_is_thinking(t_vars *vars);
-
-//  utils.c
-void	*angel_of_death(void *p);
+int		time_stamp(struct timeval time);
+int		parsing(int ac, char **av);
+int		ft_atoi(const char *str);
+void	*death_thread(void *p);
 int		am_i_dead(t_philos *ph, int i);
-// actions.c
+void	cleaning(t_vars *vars);
 void	*routine(void *p);
 void	philo_is_eating(t_philos *ph);
 void	philo_is_sleeping(t_philos *ph);

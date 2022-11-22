@@ -6,7 +6,7 @@
 /*   By: xchouina <xchouina@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:59:10 by xchouina          #+#    #+#             */
-/*   Updated: 2022/11/15 13:17:58 by xchouina         ###   ########.fr       */
+/*   Updated: 2022/11/22 13:46:30 by xchouina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,17 @@ void	*routine(void *p)
 	ph = (t_philos *)p;
 	while (!am_i_dead(ph, 0))
 	{
-		pthread_create(&ph->death_thr, NULL, angel_of_death, ph);
+		pthread_create(&ph->death_thr, NULL, death_thread, ph);
 		philo_is_eating(ph);
 		philo_is_sleeping(ph);
 		pthread_detach(ph->death_thr);
 		if (++ph->ate_nbr == ph->varg->min_eat)
 		{
 			pthread_mutex_lock(&ph->varg->finish);
+			ph->done_eating = true;
 			ph->varg->hmfe++;
 			if (ph->varg->hmfe == ph->varg->nbr_philos)
-				am_i_dead(ph, 2);
+				ph->varg->full = true;
 			pthread_mutex_unlock(&ph->varg->finish);
 			return (NULL);
 		}
@@ -46,17 +47,22 @@ void	philo_is_eating(t_philos *ph)
 		printf("%d ms: %d has taken a fork. 🍴\n",
 			time_stamp(ph->varg->time), ph->id);
 	pthread_mutex_unlock(&ph->varg->write);
+	if (ph->varg->nbr_philos == 1)
+	{
+		smart_sleeep(ph, ph->varg->t_die + 10);
+		pthread_mutex_unlock(&ph->lfork);
+	}
 	pthread_mutex_lock(ph->rfork);
 	pthread_mutex_lock(&ph->varg->write);
 	if (!am_i_dead(ph, 0))
 		printf("%d ms: %d is eating. 🍝\n", time_stamp(ph->varg->time), ph->id);
+	pthread_mutex_unlock(&ph->varg->write);
 	pthread_mutex_lock(&ph->varg->is_eating);
 	ph->last_meal = time_stamp(ph->varg->time);
 	pthread_mutex_unlock(&ph->varg->is_eating);
-	pthread_mutex_unlock(&ph->varg->write);
 	smart_sleeep(ph, ph->varg->t_eat);
-	pthread_mutex_unlock(&ph->lfork);
 	pthread_mutex_unlock(ph->rfork);
+	pthread_mutex_unlock(&ph->lfork);
 }
 
 void	philo_is_sleeping(t_philos *ph)
@@ -78,5 +84,5 @@ void	smart_sleeep(t_philos *ph, int time)
 
 	now = time_stamp(ph->varg->time);
 	while (time_stamp(ph->varg->time) - now < time)
-		usleep(50);
+		usleep(100);
 }

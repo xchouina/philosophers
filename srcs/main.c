@@ -6,13 +6,11 @@
 /*   By: xchouina <xchouina@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:04:02 by xchouina          #+#    #+#             */
-/*   Updated: 2022/11/22 09:53:02 by xchouina         ###   ########.fr       */
+/*   Updated: 2022/11/22 13:46:48 by xchouina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-// ./philo 4 410 200 200 12
 
 void	init_ph(t_vars *vars)
 {
@@ -25,6 +23,7 @@ void	init_ph(t_vars *vars)
 		vars->ph[i].id = i + 1;
 		vars->ph[i].ate_nbr = 0;
 		vars->ph[i].last_meal = 0;
+		vars->ph[i].done_eating = false;
 		pthread_mutex_init(&vars->ph[i].lfork, NULL);
 		if (i == vars->nbr_philos - 1)
 			vars->ph[i].rfork = &vars->ph[0].lfork;
@@ -44,6 +43,7 @@ void	init_vars(t_vars *vars, int ac, char **av)
 	vars->min_eat = -1;
 	vars->status = 0;
 	vars->hmfe = 0;
+	vars->full = false;
 	pthread_mutex_init(&vars->death, NULL);
 	pthread_mutex_init(&vars->write, NULL);
 	pthread_mutex_init(&vars->finish, NULL);
@@ -70,9 +70,6 @@ void	philo_threads(t_vars *vars)
 	i = -1;
 	while (++i < vars->nbr_philos)
 		pthread_create(&vars->ph[i].thr, NULL, routine, &vars->ph[i]);
-	i = 0;
-	while (i < vars->nbr_philos)
-		pthread_join(vars->ph[i++].thr, NULL);
 }
 
 int	main(int ac, char **av)
@@ -83,5 +80,6 @@ int	main(int ac, char **av)
 		return (0);
 	init_vars(&vars, ac, av);
 	philo_threads(&vars);
+	cleaning(&vars);
 	return (1);
 }
