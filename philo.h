@@ -20,7 +20,6 @@
 # include <sys/time.h>
 # include <pthread.h>
 
-
 typedef	struct	ind_philo
 {
 	int 			id;

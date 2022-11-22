@@ -1,6 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: xchouina <xchouina@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/21 10:34:36 by xchouina          #+#    #+#             */
+/*   Updated: 2022/11/21 10:35:28 by xchouina         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../philo.h"
-
 
 int	ft_isdigit(int c)
 {
@@ -43,8 +53,8 @@ int	parsing_min_max(int ac, char **av)
 
 int	parsing(int ac, char **av)
 {
-	int i;
-	int res;
+	int	i;
+	int	res;
 
 	res = 0;
 	if (ac < 5 || ac > 6)

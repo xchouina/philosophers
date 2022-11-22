@@ -6,7 +6,7 @@
 /*   By: xchouina <xchouina@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:04:02 by xchouina          #+#    #+#             */
-/*   Updated: 2022/11/15 12:53:18 by xchouina         ###   ########.fr       */
+/*   Updated: 2022/11/22 09:53:02 by xchouina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,5 @@ int	main(int ac, char **av)
 		return (0);
 	init_vars(&vars, ac, av);
 	philo_threads(&vars);
-	// chapitre_final(&vars)
 	return (1);
 }
