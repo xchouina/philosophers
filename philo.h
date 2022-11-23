@@ -50,6 +50,7 @@ typedef struct vars
 	pthread_mutex_t	write;
 	pthread_mutex_t	finish;
 	pthread_mutex_t	is_eating;
+	pthread_mutex_t	d_thread;
 
 	struct timeval	time;
 }		t_vars;

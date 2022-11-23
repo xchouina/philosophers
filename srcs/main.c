@@ -6,7 +6,7 @@
 /*   By: xchouina <xchouina@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 15:04:02 by xchouina          #+#    #+#             */
-/*   Updated: 2022/11/22 13:46:48 by xchouina         ###   ########.fr       */
+/*   Updated: 2022/11/23 11:49:58 by xchouina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	init_vars(t_vars *vars, int ac, char **av)
 	pthread_mutex_init(&vars->write, NULL);
 	pthread_mutex_init(&vars->finish, NULL);
 	pthread_mutex_init(&vars->is_eating, NULL);
+	pthread_mutex_init(&vars->d_thread, NULL);
 	if (ac == 6)
 		vars->min_eat = ft_atoi(av[5]);
 	gettimeofday(&vars->time, NULL);

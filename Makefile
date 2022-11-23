@@ -10,8 +10,8 @@ OBJS = $(SRCS:.c=.o)
 
 CC = gcc
 
-# CFLAGS = -Werror -Wall -Wextra
-CFLAGS = -Werror -Wall -Wextra -fsanitize=thread
+CFLAGS = -Werror -Wall -Wextra
+# CFLAGS = -Werror -Wall -Wextra -fsanitize=thread -g
 
 .c.o : 
 	@echo "Compiling: $<"

@@ -6,7 +6,7 @@
 /*   By: xchouina <xchouina@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 13:59:10 by xchouina          #+#    #+#             */
-/*   Updated: 2022/11/22 13:46:30 by xchouina         ###   ########.fr       */
+/*   Updated: 2022/11/23 11:17:45 by xchouina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,5 @@ void	smart_sleeep(t_philos *ph, int time)
 
 	now = time_stamp(ph->varg->time);
 	while (time_stamp(ph->varg->time) - now < time)
-		usleep(100);
+		usleep(50);
 }
