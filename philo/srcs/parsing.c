@@ -6,7 +6,7 @@
 /*   By: xchouina <xchouina@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 10:34:36 by xchouina          #+#    #+#             */
-/*   Updated: 2022/11/22 15:09:24 by xchouina         ###   ########.fr       */
+/*   Updated: 2022/11/23 12:53:37 by xchouina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	parsing_min_max(int ac, char **av)
 	i = 1;
 	while (i < ac)
 	{
-		if (ft_atoi(av[i]) > 9999)
+		if (ft_atoi(av[i]) > 9999 || ft_atoi(av[i]) < 1)
 		{
-			printf("Argument is too big :/\n");
+			printf("Argument is not in the correct range.\n");
 			return (-1);
 		}
 		i++;
